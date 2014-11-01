@@ -28,21 +28,26 @@
       <ion-header-bar class="bar-stable">
         <h1 class="title">Dribbble</h1>
       </ion-header-bar>
-      <ion-tabs class="tabs-striped tabs-top tabs-background-dark tabs-color-light">
+      <ion-tabs class="tabs-striped tabs-background-dark tabs-color-light">
 
         <ion-tab title="Popular">
-          <ion-content>
-            <div class="item dribbble-icon" style="width: 33%"
-              collection-repeat="shot in poppularList"
-              collection-item-width="'33%'"
-              collection-item-height="getItemHeight(shot, $index)"
-              ng-style="{height: getItemHeight(shot, $index)}">
-              <img ng-src="{{shot.image_teaser_url}}" style="width: 100%">
-            </div>
+          <ion-content class="dribbble-list">
+            <ion-list>
+              <ion-item class="item dribbble-item"
+                ng-repeat="shot in poppularList"
+                ng-style="{height: getItemHeight(shot, $index)}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </ion-item>
+            </ion-list>
+            <ion-infinite-scroll
+              on-infinite="loadMore()"
+              icon="ion-loading-c"
+              distance="1%">
+            </ion-infinite-scroll>
           </ion-content>
         </ion-tab>
 
-        <ion-tab title="Debuts">]
+        <ion-tab title="Debuts">
           <ion-content>
           </ion-content>
         </ion-tab>

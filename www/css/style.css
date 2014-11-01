@@ -1,1 +1,17 @@
-/* Empty. Add your own CSS if you like */
+.dribbble-list {
+  background-color: black;
+}
+.dribbble-item {
+  width: 33.33%;
+  display: block;
+  border: none;
+  float: left;
+  margin: 0;
+  padding: 2px;
+  background-color: black;
+}
+
+.dribbble-item img {
+  vertical-align: top;
+  width: 100%;
+}
