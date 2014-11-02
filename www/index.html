@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>ngDribbble</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -58,7 +58,9 @@
             <ion-item class="item dribbble-item"
               ng-repeat="shot in poppularList"
               ng-style="{height: getItemHeight(shot, $index)}">
-              <img ng-src="{{shot.image_teaser_url}}">
+              <a href="#/home/shot/{{shot.id}}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </a>
             </ion-item>
           </ion-list>
           <ion-infinite-scroll
@@ -104,6 +106,45 @@
             icon="ion-loading-c"
             distance="1%">
           </ion-infinite-scroll>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/shot.html" type="text/ng-template">
+      <ion-view title="Shot">
+        <ion-content>
+          <div class="player">
+            <img ng-src="{{shot.player.avatar_url}}"/>
+            <h4 class="shot-title">{{shot.title}}</h4>
+            <p>{{shot.player.name}}</p>
+          </div>
+          <div class="shot">
+            <img ng-src="{{shot.image_url}}" />
+          </div>
+          <ul class="shot-state">
+            <li>
+              <i class="icon ion-eye"></i>
+              <span>{{shot.views_count}}</span>
+            </li>
+            <li>
+              <i class="icon ion-chatbubble"></i>
+              <span>{{shot.comments_count}}</span>
+            </li>
+            <li>
+              <i class="icon ion-heart"></i>
+              <span>{{shot.likes_count}}</span>
+            </li>
+          </ul>
+          <div class="shot-comments">
+            <div class="shot-comments-state"></div>
+            <ul class="shot-comments-list">
+              <li class="shot-comment" ng-repeat="comment in shotComments">
+                <img ng-src="{{comment.player.avatar_url}}"/>
+                <h5 class="shot-title">{{comment.player.name}}</h5>
+                <p class="shot-comment-body">{{comment.body}}</p>
+              </li>
+            </ul>
+          </div>
         </ion-content>
       </ion-view>
     </script>

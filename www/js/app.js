@@ -17,6 +17,15 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
         }
       }
     })
+    .state('home.shot', {
+      url: "/shot/:id",
+      views: {
+        'popular-tab': {
+          templateUrl: "templates/shot.html",
+          controller: 'ShotCtrl'
+        }
+      }
+    })
     .state('home.debuts', {
       url: "/debuts",
       views: {
@@ -115,15 +124,26 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
   }
 ])
 
+.controller('ShotCtrl', ['$scope', '$stateParams', 'Dribbble', 'Comment',
+  function($scope, $stateParams, Dribbble, Comment) {
+    $scope.shot = Dribbble.query({
+      id: $stateParams.id
+    })
+    $scope.shotComments = Comment.query({
+      id: $stateParams.id
+    })
+  }
+])
+
 .factory('Dribbble', ['$resource',
   function($resource) {
-    return $resource('http://api.dribbble.com/shots/:list', {
+    return $resource('http://api.dribbble.com/shots/:id', {
       callback: 'JSON_CALLBACK'
     }, {
       popular: {
         method: 'JSONP',
         params: {
-          list: 'popular',
+          id: 'popular',
           per_page: 30
         },
         isArray: true,
@@ -134,7 +154,7 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
       debuts: {
         method: 'JSONP',
         params: {
-          list: 'debuts'
+          id: 'debuts'
         },
         isArray: true,
         transformResponse: function(data) {
@@ -144,11 +164,30 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
       everyone: {
         method: 'JSONP',
         params: {
-          list: 'everyone'
+          id: 'everyone'
         },
         isArray: true,
         transformResponse: function(data) {
           return data.shots
+        }
+      },
+      query: {
+        method: 'JSONP'
+      }
+    })
+  }
+])
+
+.factory('Comment', ['$resource',
+  function($resource) {
+    return $resource('http://api.dribbble.com/shots/:id/comments', {
+      callback: 'JSON_CALLBACK'
+    }, {
+      query: {
+        method: 'JSONP',
+        isArray: true,
+        transformResponse: function(data) {
+          return data.comments
         }
       }
     })
