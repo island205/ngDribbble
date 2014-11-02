@@ -22,3 +22,94 @@
   vertical-align: top;
   width: 100%;
 }
+
+.player {
+  height: 80px;
+  padding: 10px;
+  background-color: black;
+  position: relative;
+}
+
+.player .avatar {
+  height: 60px;
+  width: 60px;
+  border-radius: 5px;
+}
+
+.player .shot-title {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 15px;
+  left: 80px;
+  padding: 0;
+  margin: 0;
+}
+
+.player p {
+  color: #aaa;
+  position: absolute;
+  top: 40px;
+  left: 80px;
+}
+
+.player .shot-player-name {
+  color: #ea4c89;
+  font-weight: bold;
+}
+
+.shot {
+  height: 286px;
+  overflow: hidden;
+}
+
+.shot img {
+  width: 100%;
+}
+
+.shot-state {
+  background-color: black;
+  height: 40px;
+}
+
+.shot-state li {
+  float: left;
+  width: 33.33%;
+  line-height: 40px;
+  text-align: center;
+  color: #aaa;
+}
+
+.shot-state li span {
+  color: white;
+  font-weight: bold;
+}
+
+.shot-comments .shot-comments-state {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  color: #666;
+}
+
+.shot-comment {
+  min-height: 60px;
+  padding-left: 60px;
+  padding-right: 10px;
+  position: relative;
+}
+
+.shot-comment img {
+  height: 40px;
+  left: 10px;
+  position: absolute;
+}
+
+.shot-comment .shot-comment-body {
+  color: #666;
+  font-size: 13px;
+}
+
+.shot-comment h5{
+  margin-bottom: 5px;
+}

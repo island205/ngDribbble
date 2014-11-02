@@ -79,7 +79,9 @@
             <ion-item class="item dribbble-item"
               ng-repeat="shot in debutsList"
               ng-style="{height: getItemHeight(shot, $index)}">
-              <img ng-src="{{shot.image_teaser_url}}">
+              <a href="#/home/shot/{{shot.id}}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </a>
             </ion-item>
           </ion-list>
           <ion-infinite-scroll
@@ -98,7 +100,9 @@
             <ion-item class="item dribbble-item"
               ng-repeat="shot in everyoneList"
               ng-style="{height: getItemHeight(shot, $index)}">
-              <img ng-src="{{shot.image_teaser_url}}">
+              <a href="#/home/shot/{{shot.id}}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </a>
             </ion-item>
           </ion-list>
           <ion-infinite-scroll
@@ -114,9 +118,9 @@
       <ion-view title="Shot">
         <ion-content>
           <div class="player">
-            <img ng-src="{{shot.player.avatar_url}}"/>
+            <img class="avatar" ng-src="{{shot.player.avatar_url}}"/>
             <h4 class="shot-title">{{shot.title}}</h4>
-            <p>{{shot.player.name}}</p>
+            <p>by <span class="shot-player-name">{{shot.player.name}}</span></p>
           </div>
           <div class="shot">
             <img ng-src="{{shot.image_url}}" />
@@ -125,18 +129,24 @@
             <li>
               <i class="icon ion-eye"></i>
               <span>{{shot.views_count}}</span>
+              Views
             </li>
             <li>
               <i class="icon ion-chatbubble"></i>
               <span>{{shot.comments_count}}</span>
+              Comments
             </li>
             <li>
               <i class="icon ion-heart"></i>
               <span>{{shot.likes_count}}</span>
+              Likes
             </li>
           </ul>
           <div class="shot-comments">
-            <div class="shot-comments-state"></div>
+            <div class="shot-comments-state">
+              <i class="icon ion-chatbubble"></i>
+              Comments
+            </div>
             <ul class="shot-comments-list">
               <li class="shot-comment" ng-repeat="comment in shotComments">
                 <img ng-src="{{comment.player.avatar_url}}"/>

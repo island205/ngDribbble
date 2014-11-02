@@ -144,7 +144,8 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
         method: 'JSONP',
         params: {
           id: 'popular',
-          per_page: 30
+          per_page: 30,
+          cache: true
         },
         isArray: true,
         transformResponse: function(data) {
@@ -154,7 +155,9 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
       debuts: {
         method: 'JSONP',
         params: {
-          id: 'debuts'
+          id: 'debuts',
+          per_page: 30,
+          cache: true
         },
         isArray: true,
         transformResponse: function(data) {
@@ -164,7 +167,9 @@ angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
       everyone: {
         method: 'JSONP',
         params: {
-          id: 'everyone'
+          id: 'everyone',
+          per_page: 30,
+          cache: true
         },
         isArray: true,
         transformResponse: function(data) {

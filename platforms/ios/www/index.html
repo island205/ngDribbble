@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>ngDribbble</title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -22,42 +22,142 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="ngDribbble" ng-controller="ngDribbbleController" class="platform-ios platform-cordova platform-webview">
+  <body ng-app="ngDribbbleApp" class="platform-ios platform-cordova platform-webview">
 
-    <ion-pane>
-      <ion-header-bar class="bar-stable ng-dribbble-header">
-        <h1 class="title">Dribbble</h1>
-      </ion-header-bar>
+
+    <ion-nav-bar class="nav-title-slide-ios7 bar-positive ng-dribbble-header">
+      <ion-nav-back-button class="button-icon ion-arrow-left-c">
+      </ion-nav-back-button>
+    </ion-nav-bar>
+             
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
+
+
+    <script id="templates/home.html" type="text/ng-template">
       <ion-tabs class="tabs-striped tabs-background-dark tabs-color-light">
 
-        <ion-tab title="Popular">
-          <ion-content class="dribbble-list">
-            <ion-list>
-              <ion-item class="item dribbble-item"
-                ng-repeat="shot in poppularList"
-                ng-style="{height: getItemHeight(shot, $index)}">
-                <img ng-src="{{shot.image_teaser_url}}">
-              </ion-item>
-            </ion-list>
-            <ion-infinite-scroll
-              on-infinite="loadMore()"
-              icon="ion-loading-c"
-              distance="1%">
-            </ion-infinite-scroll>
-          </ion-content>
+        <ion-tab title="Popular" href="#/home/popular">
+          <ion-nav-view name="popular-tab"></ion-nav-view>
         </ion-tab>
 
-        <ion-tab title="Debuts">
-          <ion-content>
-          </ion-content>
+        <ion-tab title="Debuts" href="#/home/debuts">
+          <ion-nav-view name="debuts-tab"></ion-nav-view>
         </ion-tab>
 
-        <ion-tab title="Everyone">
-          <ion-content>
-          </ion-content>
+        <ion-tab title="Everyone" href="#/home/everyone">
+          <ion-nav-view name="everyone-tab"></ion-nav-view>
         </ion-tab>
 
       </ion-tabs>
-    </ion-pane>
+    </script>
+
+    <script id="templates/popular.html" type="text/ng-template">
+      <ion-view title="Popular">
+        <ion-content class="dribbble-list">
+          <ion-list>
+            <ion-item class="item dribbble-item"
+              ng-repeat="shot in poppularList"
+              ng-style="{height: getItemHeight(shot, $index)}">
+              <a href="#/home/shot/{{shot.id}}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </a>
+            </ion-item>
+          </ion-list>
+          <ion-infinite-scroll
+            on-infinite="loadMore()"
+            icon="ion-loading-c"
+            distance="1%">
+          </ion-infinite-scroll>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/debuts.html" type="text/ng-template">
+      <ion-view title="Debuts">
+        <ion-content class="dribbble-list">
+          <ion-list>
+            <ion-item class="item dribbble-item"
+              ng-repeat="shot in debutsList"
+              ng-style="{height: getItemHeight(shot, $index)}">
+              <a href="#/home/shot/{{shot.id}}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </a>
+            </ion-item>
+          </ion-list>
+          <ion-infinite-scroll
+            on-infinite="loadMore()"
+            icon="ion-loading-c"
+            distance="1%">
+          </ion-infinite-scroll>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/everyone.html" type="text/ng-template">
+      <ion-view title="Everyone">
+        <ion-content class="dribbble-list">
+          <ion-list>
+            <ion-item class="item dribbble-item"
+              ng-repeat="shot in everyoneList"
+              ng-style="{height: getItemHeight(shot, $index)}">
+              <a href="#/home/shot/{{shot.id}}">
+                <img ng-src="{{shot.image_teaser_url}}">
+              </a>
+            </ion-item>
+          </ion-list>
+          <ion-infinite-scroll
+            on-infinite="loadMore()"
+            icon="ion-loading-c"
+            distance="1%">
+          </ion-infinite-scroll>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/shot.html" type="text/ng-template">
+      <ion-view title="Shot">
+        <ion-content>
+          <div class="player">
+            <img class="avatar" ng-src="{{shot.player.avatar_url}}"/>
+            <h4 class="shot-title">{{shot.title}}</h4>
+            <p>by <span class="shot-player-name">{{shot.player.name}}</span></p>
+          </div>
+          <div class="shot">
+            <img ng-src="{{shot.image_url}}" />
+          </div>
+          <ul class="shot-state">
+            <li>
+              <i class="icon ion-eye"></i>
+              <span>{{shot.views_count}}</span>
+              Views
+            </li>
+            <li>
+              <i class="icon ion-chatbubble"></i>
+              <span>{{shot.comments_count}}</span>
+              Comments
+            </li>
+            <li>
+              <i class="icon ion-heart"></i>
+              <span>{{shot.likes_count}}</span>
+              Likes
+            </li>
+          </ul>
+          <div class="shot-comments">
+            <div class="shot-comments-state">
+              <i class="icon ion-chatbubble"></i>
+              Comments
+            </div>
+            <ul class="shot-comments-list">
+              <li class="shot-comment" ng-repeat="comment in shotComments">
+                <img ng-src="{{comment.player.avatar_url}}"/>
+                <h5 class="shot-title">{{comment.player.name}}</h5>
+                <p class="shot-comment-body">{{comment.body}}</p>
+              </li>
+            </ul>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
   </body>
 </html>
