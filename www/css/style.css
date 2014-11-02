@@ -1,3 +1,10 @@
+.ng-dribbble-header.bar {
+  background-color: #ea4c89;
+}
+.ng-dribbble-header.bar .title {
+  color: white;
+}
+
 .dribbble-list {
   background-color: black;
 }

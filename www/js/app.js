@@ -1,4 +1,45 @@
-angular.module('ngDribbble', ['ionic', 'ngResource'])
+angular.module('ngDribbbleApp', ['ionic', 'ngResource'])
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+    .state('home', {
+      url: "/home",
+      abstract: true,
+      templateUrl: "templates/home.html"
+    })
+    .state('home.popular', {
+      url: "/popular",
+      views: {
+        'popular-tab': {
+          templateUrl: "templates/popular.html",
+          controller: 'PopularCtrl'
+        }
+      }
+    })
+    .state('home.debuts', {
+      url: "/debuts",
+      views: {
+        'debuts-tab': {
+          templateUrl: "templates/debuts.html",
+          controller: 'DebutsCtrl'
+        }
+      }
+    })
+    .state('home.everyone', {
+      url: "/everyone",
+      views: {
+        'everyone-tab': {
+          templateUrl: "templates/everyone.html",
+          controller: 'EveryoneCtrl'
+        }
+      }
+    });
+
+
+  $urlRouterProvider.otherwise("/home/popular");
+
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -11,7 +52,7 @@ angular.module('ngDribbble', ['ionic', 'ngResource'])
   });
 })
 
-.controller('ngDribbbleController', ['$scope', 'Dribbble',
+.controller('PopularCtrl', ['$scope', 'Dribbble',
   function($scope, Dribbble) {
     $scope.popularPage = 1
     $scope.poppularList = []
@@ -20,6 +61,48 @@ angular.module('ngDribbble', ['ionic', 'ngResource'])
         page: $scope.popularPage++
       }).$promise.then(function(list) {
         $scope.poppularList.push.apply($scope.poppularList, list)
+        $scope.$broadcast('scroll.infiniteScrollComplete')
+      })
+    }
+    $scope.$on('$stateChangeSuccess', function() {
+      $scope.loadMore()
+    })
+    $scope.getItemHeight = function(item, index) {
+      return 90;
+    };
+  }
+])
+
+.controller('DebutsCtrl', ['$scope', 'Dribbble',
+  function($scope, Dribbble) {
+    $scope.debutsPage = 1
+    $scope.debutsList = []
+    $scope.loadMore = function() {
+      Dribbble.debuts({
+        page: $scope.debutsPage++
+      }).$promise.then(function(list) {
+        $scope.debutsList.push.apply($scope.debutsList, list)
+        $scope.$broadcast('scroll.infiniteScrollComplete')
+      })
+    }
+    $scope.$on('$stateChangeSuccess', function() {
+      $scope.loadMore()
+    })
+    $scope.getItemHeight = function(item, index) {
+      return 90;
+    };
+  }
+])
+
+.controller('EveryoneCtrl', ['$scope', 'Dribbble',
+  function($scope, Dribbble) {
+    $scope.everyonePage = 1
+    $scope.everyoneList = []
+    $scope.loadMore = function() {
+      Dribbble.popular({
+        page: $scope.everyonePage++
+      }).$promise.then(function(list) {
+        $scope.everyoneList.push.apply($scope.everyoneList, list)
         $scope.$broadcast('scroll.infiniteScrollComplete')
       })
     }
